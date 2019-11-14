@@ -3,6 +3,7 @@ from time import sleep
 # 输入
 import autoit
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
@@ -164,3 +165,72 @@ def test_windows(driver):
         if driver.title.__contains__("京东"):
             break
 
+#
+def test_iframe(driver):
+    driver.get('http://192.168.1.128:8082/xuepl1/frame/main.html')
+    sleep(2)
+
+    iframe=driver.find_element_by_xpath('/html/frameset/frameset/frame[1]')
+    driver.switch_to_frame(iframe)
+    sleep(2)
+    driver.find_element_by_partial_link_text('京东').click()
+    sleep(2)
+    #退出当前frame
+    driver.switch_to.parent_frame()
+    #回到初始页面
+    #driver.switch_to.default_content()
+    sleep(2)
+
+    inpu=driver.find_element_by_xpath('/html/frameset/frameset/frame[2]')
+    driver.switch_to_frame(inpu)
+    inpuu=driver.find_element_by_xpath('//*[@id="key"]')
+    inpuu.send_keys("华为")
+
+    sousuo=driver.find_element_by_xpath('//*[@id="search"]/div/div[2]/button')
+    sousuo.click()
+    sleep(3)
+
+
+# def test_bd(driver):
+#     driver.get('https://www.baidu.com/')
+#     sleep(2)
+#     db=driver.find_element_by_xpath('//*[@id="kw"]')
+#     db.send_keys("手机")
+#     sleep(2)
+#
+#     bdss=driver.find_element_by_xpath('//*[@id="su"]')
+#     bdss.click()
+#     sleep(2)
+#
+#     jd=driver.find_element_by_xpath('//*[@id="3001"]/div[1]/h3/a')
+#     jd.click()click
+
+def test_wait(driver):
+    driver.get('http://ui.yansl.com/#/loading')
+    ui=driver.find_element_by_xpath('//*[@id="test_wait"]/span')
+    ui.click()
+
+    #显示等待
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC #定义了变量EC表示expected_conditions
+
+    WebDriverWait(driver,5,0.5).until(
+        EC.presence_of_element_located((By.XPATH,'//*[@id="form"]/form/div[1]/div/div/div[3]/table/tbody/tr[1]/td[2]/div'))
+    )
+    ui1=driver.find_element_by_xpath('//*[@id="form"]/form/div[1]/div/div/div[3]/table/tbody/tr[1]/td[2]/div')
+    print(ui1.text)
+    sleep(2)
+
+
+def test_wait(driver):
+
+    driver.get('http://ui.yansl.com/#/loading')
+    ui=driver.find_element_by_xpath('//*[@id="test_wait"]/span')
+    ui.click()
+
+    #隐士等待
+    driver.implicitly_wait(5)
+
+    ui1=driver.find_element_by_xpath('//*[@id="form"]/form/div[1]/div/div/div[3]/table/tbody/tr[1]/td[2]/div')
+    print(ui1.text)
+    sleep(2)
