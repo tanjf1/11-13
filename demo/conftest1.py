@@ -1,4 +1,4 @@
-#上课的conftese.py ,操作生成网页，估计标题多"1"
+#上课的conftese.py ,操作生成网页，估计标题多"1",不用test_allure
 
 # import pytest
 #

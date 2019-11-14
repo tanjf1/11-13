@@ -1,3 +1,4 @@
+#要用test_allure
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import os
